@@ -15,3 +15,6 @@ contract MyContract is GlobalVariable {
         return globalValue;
     }
 }
+
+//
+This Solidity code defines a contract with a global variable globalValue initialized to 100, and another contract MyContract inheriting this variable, providing a function to retrieve its value.

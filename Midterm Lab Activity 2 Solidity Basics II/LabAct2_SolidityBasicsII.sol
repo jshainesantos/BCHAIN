@@ -11,21 +11,27 @@ contract Ownable {
     }
 
     modifier onlyOwner() {
-        require(msg.sender == owner, "Ownable: caller is not the owner");
+        require(msg.sender == owner, "Only the contract owner can call this function");
         _;
     }
 
     function transferOwnership(address newOwner) public onlyOwner {
-        require(newOwner != address(0), "Ownable: new owner is the zero address");
+        require(newOwner != address(0), "New owner address cannot be zero");
         emit OwnershipTransferred(owner, newOwner);
         owner = newOwner;
     }
 }
 
 contract MyContract is Ownable {
-    uint256 public someValue;
+    uint256 public dataValue;
 
-    function setSomeValue(uint256 newValue) public onlyOwner {
-        someValue = newValue;
+    event ValueChanged(uint256 oldValue, uint256 newValue);
+
+    constructor() Ownable() {}
+
+    function setDataValue(uint256 newValue) public onlyOwner {
+        uint256 oldValue = dataValue;
+        dataValue = newValue;
+        emit ValueChanged(oldValue, newValue);
     }
 }
